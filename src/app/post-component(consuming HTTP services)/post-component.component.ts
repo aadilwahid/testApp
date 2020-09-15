@@ -25,14 +25,16 @@ export class PostComponentComponent implements OnInit {
 
     this.service.create(postBody).subscribe(
       (response) => {
-        postBody.id = response.id;
+        postBody['id'] = response['id'];
         this.posts.splice(0, 0, postBody);
         console.log(response);
       },
       (error: AppError) => {
         if (error instanceof BadInput) {
           // this.form.setErrors(error.originalError);
-        } else { throw error; }
+        } else {
+          throw error;
+        }
       }
     );
   }
@@ -53,8 +55,9 @@ export class PostComponentComponent implements OnInit {
       (error: AppError) => {
         if (error instanceof NotFoundError) {
           alert('This post has already been deleted.');
+        } else {
+          throw error;
         }
-        else { throw error; }
       }
     );
   }
